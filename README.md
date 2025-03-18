@@ -59,7 +59,7 @@ The results show you should keep things on the stack as much as you can. To be 1
 sure this is the case for you, you need to run these benchmarks on the system that
 your code will be running on. Having said that, I would be surprised if your system
 diverged from the norm in this regard (the norm being stack == faster). One small
-thing you can do to improve your code, is to default factory functions that return
+thing you can do to improve your code, is to default to factory functions that return
 by value, instead of by pointer. Personally, I follow the `CreateFoo()` convention
 for factory functions that return by value, and use `NewFoo()` if it returns by pointer.
 I do this because the `new` keyword indicates dynamic memory allocation in many languages.
