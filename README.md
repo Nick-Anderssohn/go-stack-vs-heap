@@ -55,11 +55,9 @@ stack size of a goroutine is 2 KiB. Growing it to 1 MiB would be wasteful. You'l
 also notice that this is the first time where the return-by-pointer code is faster!
 
 ## The takeaway
-The results show you should keep things on the stack as much as you can. To be 100%
-sure this is the case for you, you need to run these benchmarks on the system that
-your code will be running on. Having said that, I would be surprised if your system
-diverged from the norm in this regard (the norm being stack == faster). One small
-thing you can do to improve your code, is to default to factory functions that return
+The results show you should keep things on the stack as much as you can. Not only is it
+faster, but your program will take up less memory, and the garbage collector won't have to do as much.
+One small thing you can do to improve your code, is to default to factory functions that return
 by value, instead of by pointer. Personally, I follow the `CreateFoo()` convention
 for factory functions that return by value, and use `NewFoo()` if it returns by pointer.
 I do this because the `new` keyword indicates dynamic memory allocation in many languages.
