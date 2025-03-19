@@ -65,3 +65,24 @@ In fact, the built-in `new` function in go follows this convention as well.
 Note that you should still keep function receivers and parameters as pointers. That way you
 don't copy the entire struct along the stack for every function call, and instead just pass
 the memory address :)
+
+# EC2 Performance
+I also ran the benchmarks on a t.2 micro ec2 instance, and the results were essentially the same,
+except the large benchmark had an even more drastic improvement! It was about 11x faster! The takeaway
+is that using the stack is just as important in the cloud as it is elsewhere. Here were the results:
+```
+goos: linux
+goarch: amd64
+pkg: github.com/Nick-Anderssohn/go-stack-vs-heap/bench
+cpu: Intel(R) Xeon(R) CPU E5-2686 v4 @ 2.30GHz
+BenchmarkSmall/stack         	290298038	         4.108 ns/op
+BenchmarkSmall/heap          	60206904	        17.19 ns/op
+BenchmarkMed/stack           	31388863	        38.38 ns/op
+BenchmarkMed/heap            	 7028383	       169.2 ns/op
+BenchmarkLarge/stack         	20701927	        57.49 ns/op
+BenchmarkLarge/heap          	 1857775	       642.9 ns/op
+BenchmarkHuge/stack          	    5386	    206486 ns/op
+BenchmarkHuge/heap           	   14360	     85129 ns/op
+PASS
+ok  	github.com/Nick-Anderssohn/go-stack-vs-heap/bench	9.349s
+```
